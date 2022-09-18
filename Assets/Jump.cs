@@ -11,14 +11,11 @@ public class Jump : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-		{
-            PlayerJump();
-		}
+       
     }
 
-    private void PlayerJump()
+    public void PlayerJump()
 	{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-	}
+        Debug.Log("JumpBaby");
+    }
 }
