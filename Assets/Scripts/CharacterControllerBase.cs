@@ -16,6 +16,7 @@ public abstract class CharacterControllerBase : MonoBehaviour
     protected float xRawInput;
     protected float smoothingValue;
     protected int xDirectionFlag=1;
+    protected bool isActive = false;
     #endregion
 
 	#region Unity Methods
@@ -32,8 +33,8 @@ public abstract class CharacterControllerBase : MonoBehaviour
 
     protected virtual void Update()
 	{
-      
-	}
+       
+    }
     #endregion
 
     #region Private Methods
@@ -58,19 +59,21 @@ public abstract class CharacterControllerBase : MonoBehaviour
     #endregion
 
     #region Public Methods
-    public virtual void OnMovement(InputAction.CallbackContext value)
+    public void OnMovement(InputAction.CallbackContext value)
 	{
 		Vector2 rawInput = value.ReadValue<Vector2>();
 		xRawInput = rawInput.x;
 		CheckIfSpriteToBeFlipped(value);
 	}
 
-	public virtual void OnJump(InputAction.CallbackContext value)
-	{
-        if(value.performed)
+    public void OnJump(InputAction.CallbackContext value)
+    {
+        if (value.performed)
         {
             characterMovement.MakePlayerJump();
+            characterAnimation.JumpSqueeze();
         }
+        
     }
 
     public virtual void Die()

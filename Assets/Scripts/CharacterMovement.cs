@@ -9,27 +9,51 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D rb2D;
     #endregion
 
-    #region Variables
-    [SerializeField] private int movementSpeed = 20;
-    [SerializeField] private int jumpPower = 20;
-    [SerializeField] private int fallMultiplier = 5;
-    private float originalGravityScale=1f;
-    #endregion
+    #region Structs
+    [SerializeField] LayerMask groundLayerMask;
+	#endregion
 
-    void Start()
+	#region Variables
+	[SerializeField] private int movementSpeed = 20;
+    [SerializeField] private float jumpPower = 20;
+    [SerializeField] private float fallSpeed = 5; 
+    [SerializeField] private int fallMultiplier = 5;
+    private float originalGravityScale;
+    private bool isOnGround;
+	#endregion
+
+	#region Unity Methods
+	void Start()
     {
         originalGravityScale = rb2D.gravityScale;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        if(rb2D.velocity.y<0)
-		{
-            rb2D.gravityScale += fallMultiplier;
-        }
+        isOnGround = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, groundLayerMask);
     }
+	void Update()
+	{
+		AlterGravityScale();
+	}
+	#endregion
 
-    public void MovePlayer(float smoothedOutDirection)
+	#region Private Methods
+	private void AlterGravityScale()
+	{
+		if (rb2D.velocity.y < fallSpeed && !isOnGround)
+		{
+			rb2D.gravityScale = fallMultiplier;
+		}
+		if (isOnGround)
+		{
+			rb2D.gravityScale = originalGravityScale;
+		}
+	}
+	#endregion
+
+	#region Public Methods
+	public void MovePlayer(float smoothedOutDirection)
     {
         Vector2 newPosition = new Vector2(transform.position.x + (smoothedOutDirection * movementSpeed * Time.deltaTime), transform.position.y);
         transform.position = newPosition;
@@ -37,6 +61,10 @@ public class CharacterMovement : MonoBehaviour
 
 	public void MakePlayerJump()
 	{
-        rb2D.AddForce(Vector2.up * jumpPower, ForceMode2D.Force);
+        if(isOnGround)
+		{
+            rb2D.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse ); 
+        }
 	}
+	#endregion
 }
