@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6619087615955873202}
   - component: {fileID: 6619087615955873200}
   - component: {fileID: 6619087615955873207}
+  - component: {fileID: 359600578062530277}
   m_Layer: 0
   m_Name: WaterCharacter
   m_TagString: Untagged
@@ -249,6 +250,18 @@ MonoBehaviour:
   squeezeScale: {x: 0.5, y: 2, z: 1}
   squeezeInterval: 0.2
   selectedVisual: {fileID: 6619087617606522615}
+--- !u!114 &359600578062530277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6619087615955873198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 735fe93b9fffeb34e9dc581f166804a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6619087615977115300
 GameObject:
   m_ObjectHideFlags: 0

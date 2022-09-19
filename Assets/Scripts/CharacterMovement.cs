@@ -22,6 +22,16 @@ public class CharacterMovement : MonoBehaviour
     private bool isOnGround;
 	#endregion
 
+	#region Properties
+	public bool IsOnGround
+	{
+		get
+		{
+			return isOnGround;
+		}
+	}
+	#endregion
+
 	#region Unity Methods
 	void Start()
     {

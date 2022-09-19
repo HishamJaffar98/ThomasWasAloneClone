@@ -80,6 +80,7 @@ public class CharacterAnimation : MonoBehaviour
 	{
 		if (currentJumpSqueezeState == JumpSqueezeStates.NormalToSqueeze)
 		{
+			Debug.Log("sQUEEZE");
 			squeezeTimer += Time.deltaTime;
 			float interpolationValue = squeezeTimer / squeezeInterval;
 			characterSprite.transform.localScale = Vector3.Lerp(originalScale, squeezeScale, interpolationValue);

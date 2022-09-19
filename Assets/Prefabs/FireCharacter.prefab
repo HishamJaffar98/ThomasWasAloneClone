@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 467913833106733133}
   - component: {fileID: 6748050549778535906}
   - component: {fileID: 6748050549778535909}
+  - component: {fileID: 1906905626634106840}
   m_Layer: 0
   m_Name: FireCharacter
   m_TagString: Untagged
@@ -580,3 +581,15 @@ MonoBehaviour:
   squeezeScale: {x: 0.5, y: 2, z: 1}
   squeezeInterval: 0.2
   selectedVisual: {fileID: 6748050548123954853}
+--- !u!114 &1906905626634106840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6748050549778535932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 735fe93b9fffeb34e9dc581f166804a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
 	public event Action<PlayerInput> OnCharacterSelected;
 	#endregion
 
-
 	#region Unity Methods
 	private void Awake()
 	{
@@ -36,29 +35,52 @@ public class GameManager : MonoBehaviour
             Instance = this;
 		}
 	}
+
+	private void OnEnable()
+	{
+		CharacterControllerBase.OnDeath += RefillInputControllerArray;
+	}
+
 	void Start()
     {
         playerInputControllers[currentlyActiveInputIndex].enabled = true;
     }
-    void Update()
-    {
 
-    }
+	private void OnDisable()
+	{
+		CharacterControllerBase.OnDeath -= RefillInputControllerArray;
+	}
 	#endregion
 
 	#region Private Methods
 	private void SetPlayableCharacter(int activePlayerIndex)
 	{
-        for(int i=0;i< playerInputControllers.Length;i++)
+		for (int i = 0; i < playerInputControllers.Length; i++)
 		{
-            if(i!=activePlayerIndex)
+			if (i != activePlayerIndex)
 			{
-                playerInputControllers[i].enabled = false;
-            }
-        }
-        playerInputControllers[activePlayerIndex].enabled = true;
-        OnCharacterSelected?.Invoke(playerInputControllers[activePlayerIndex]);
-    }
+				playerInputControllers[i].enabled = false;
+			}
+		}
+		playerInputControllers[activePlayerIndex].enabled = true;
+		OnCharacterSelected?.Invoke(playerInputControllers[activePlayerIndex]);
+	}
+
+	private void RefillInputControllerArray(CharacterControllerBase controllerBaseClass)
+	{
+		if(controllerBaseClass.GetType() == typeof(WaterCharacter))
+		{
+			playerInputControllers[0] = FindObjectOfType<WaterCharacter>().GetComponent<PlayerInput>();
+		}
+		if(controllerBaseClass.GetType() == typeof(FireCharacter))
+		{
+			playerInputControllers[1] = FindObjectOfType<FireCharacter>().GetComponent<PlayerInput>();
+		}
+		if (controllerBaseClass.GetType() == typeof(IceCharacter))
+		{
+			playerInputControllers[2] = FindObjectOfType<IceCharacter>().GetComponent<PlayerInput>();
+		}
+	}
 	#endregion
 
 	#region Public Methods

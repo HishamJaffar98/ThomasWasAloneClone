@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 [RequireComponent(typeof(CharacterMovement), typeof(CharacterAnimation))]
 public abstract class CharacterControllerBase : MonoBehaviour
@@ -17,9 +18,20 @@ public abstract class CharacterControllerBase : MonoBehaviour
     protected float smoothingValue;
     protected int xDirectionFlag=1;
     protected bool isActive = false;
+    protected Vector2 spawnPoint;
     #endregion
 
-	#region Unity Methods
+    #region Events
+    public static event Action<CharacterControllerBase> OnDeath;
+    #endregion
+
+    #region Unity Methods
+    protected virtual void OnEnable()
+	{
+        CharacterCollisionHandler.OnHazardHit+= CloneAndDie;
+        CheckPointManager.OnLatestCheckPointChanged += SetSpawnPoint;
+    }
+
 	protected virtual void Start()
     {
        
@@ -34,6 +46,12 @@ public abstract class CharacterControllerBase : MonoBehaviour
     protected virtual void Update()
 	{
        
+    }
+
+    protected virtual void OnDisable()
+    {
+        CharacterCollisionHandler.OnHazardHit -= CloneAndDie;
+        CheckPointManager.OnLatestCheckPointChanged -= SetSpawnPoint;
     }
     #endregion
 
@@ -56,10 +74,21 @@ public abstract class CharacterControllerBase : MonoBehaviour
             characterAnimation.FlipSprite(xDirectionFlag);
         }
     }
-    #endregion
 
-    #region Public Methods
-    public void OnMovement(InputAction.CallbackContext value)
+    private void SetSpawnPoint(Transform spawnPointTransform)
+	{
+        spawnPoint = spawnPointTransform.position;
+	}
+
+    private GameObject CloneInstance()
+    {
+        return GameObject.Instantiate(this.gameObject, spawnPoint, Quaternion.identity);
+    }
+	#endregion
+
+	
+	#region Public Methods
+	public void OnMovement(InputAction.CallbackContext value)
 	{
 		Vector2 rawInput = value.ReadValue<Vector2>();
 		xRawInput = rawInput.x;
@@ -68,22 +97,23 @@ public abstract class CharacterControllerBase : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext value)
     {
-        if (value.performed)
+        if (value.performed && characterMovement.IsOnGround == true)
         {
             characterMovement.MakePlayerJump();
             characterAnimation.JumpSqueeze();
         }
-        
     }
 
-    public virtual void Die()
+    public virtual void CloneAndDie(GameObject gameObjectToDestroy)
     {
-
-    }
-
-    public virtual void ReSpawn()
-    {
-
+        if(gameObjectToDestroy==this.gameObject)
+		{
+            gameObject.GetComponent<PlayerInput>().enabled = false;
+            GameObject clone = CloneInstance();
+            clone.GetComponent<PlayerInput>().enabled = true;
+            OnDeath?.Invoke(this);
+            Destroy(gameObject);
+        }
     }
 	#endregion
 
