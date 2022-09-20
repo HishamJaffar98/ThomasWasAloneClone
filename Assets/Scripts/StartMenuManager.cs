@@ -10,10 +10,11 @@ public class StartMenuManager : MonoBehaviour
     [SerializeField] RawImage backgroundImage;
     [SerializeField] float xSpeed, ySpeed;
 
-
     [Header("Fader Parameters")]
     [SerializeField] GameObject fader;
     [SerializeField] Animator faderAnimator;
+
+    Buttons buttonSelected = Buttons.None;
     void Start()
     {
         
@@ -30,7 +31,15 @@ public class StartMenuManager : MonoBehaviour
     {
         if (faderAnimator.GetCurrentAnimatorStateInfo(0).IsName("FadeOut") && faderAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
-            SceneManager.LoadScene(1);
+            switch (buttonSelected)
+            {
+                case Buttons.Start:
+                    SceneManager.LoadScene(1);
+                    break;
+                case Buttons.Quit:
+                    Application.Quit();
+                    break;
+            }
         }
     }
     private void ScrollBackgroundInfinitely()
@@ -40,11 +49,13 @@ public class StartMenuManager : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
+        fader.SetActive(true);
+        buttonSelected = Buttons.Quit;
     }
 
     public void StartButtonClicked()
 	{
         fader.SetActive(true);
+        buttonSelected = Buttons.Start;
     }
 }

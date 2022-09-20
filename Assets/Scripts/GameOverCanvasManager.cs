@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public enum Buttons { None, Restart, Menu, Quit };
+public enum Buttons { None, Restart, Menu, Quit, Start };
 public class GameOverCanvasManager : MonoBehaviour
 {
     [SerializeField] GameObject gameOverCanvasBaseContainer;
