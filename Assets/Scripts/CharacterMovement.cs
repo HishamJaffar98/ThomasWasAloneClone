@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private int fallMultiplier = 5;
     private float originalGravityScale;
     private bool isOnGround;
+	#endregion
+
+	#region Events
+	public static event Action OnCharacterJumped;
 	#endregion
 
 	#region Properties
@@ -73,6 +78,7 @@ public class CharacterMovement : MonoBehaviour
 	{
         if(isOnGround)
 		{
+			OnCharacterJumped?.Invoke();
             rb2D.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse ); 
         }
 	}

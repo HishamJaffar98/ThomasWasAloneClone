@@ -17,10 +17,13 @@ public class GameManager : MonoBehaviour
 
 	#region Variables
 	int currentlyActiveInputIndex = 0;
+	int playersDone = 0;
+	const int MAX_PLAYER_COUNT = 3;
 	#endregion
 
 	#region Events
 	public event Action<PlayerInput[],int> OnCharacterSelected;
+	public event Action OnGameOver;
 	#endregion
 
 	#region Unity Methods
@@ -39,6 +42,8 @@ public class GameManager : MonoBehaviour
 	private void OnEnable()
 	{
 		CharacterControllerBase.OnDeath += RefillInputControllerArray;
+		ExitPoint.OnPlayerEnterExitPoint += IncrementPlayersDone;
+		ExitPoint.OnPlayerLeaveExitPoint += DecrementPlayersDone;
 	}
 
 	void Start()
@@ -49,6 +54,8 @@ public class GameManager : MonoBehaviour
 	private void OnDisable()
 	{
 		CharacterControllerBase.OnDeath -= RefillInputControllerArray;
+		ExitPoint.OnPlayerEnterExitPoint -= IncrementPlayersDone;
+		ExitPoint.OnPlayerLeaveExitPoint -= DecrementPlayersDone;
 	}
 	#endregion
 
@@ -81,6 +88,31 @@ public class GameManager : MonoBehaviour
 			playerInputControllers[2] = FindObjectOfType<IceCharacter>().GetComponent<PlayerInput>();
 		}
 	}
+
+	private void IncrementPlayersDone()
+	{
+		playersDone++;
+		if(playersDone>=MAX_PLAYER_COUNT)
+		{
+			DisablePlayerInput();
+			OnGameOver?.Invoke();
+		}
+	}
+
+	private void DecrementPlayersDone()
+	{
+		playersDone--;
+	}
+
+	private void DisablePlayerInput()
+	{
+		foreach(PlayerInput playerInput in playerInputControllers)
+		{
+			playerInput.DeactivateInput();
+		}
+	}
+
+	
 	#endregion
 
 	#region Public Methods

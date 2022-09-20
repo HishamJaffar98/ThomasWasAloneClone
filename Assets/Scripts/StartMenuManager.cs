@@ -41,10 +41,6 @@ public class StartMenuManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-        if (Debug.isDebugBuild)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-        }
     }
 
     public void StartButtonClicked()

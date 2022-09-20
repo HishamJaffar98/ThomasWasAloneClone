@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class BGMManager : MonoBehaviour
 {
 
 	private void Awake()
 	{
-        if (FindObjectsOfType<AudioManager>().Length > 1)
+        if (FindObjectsOfType<BGMManager>().Length > 1)
         {
             Destroy(gameObject);
         }

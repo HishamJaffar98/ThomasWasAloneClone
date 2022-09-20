@@ -15,7 +15,7 @@ public abstract class CharacterControllerBase : MonoBehaviour
 
     #region Variables
     [SerializeField] protected int movementSmoothingFactor = 2;
-    [SerializeField] protected Vector2 spawnPoint;
+    [SerializeField] protected Transform spawnPoint;
     protected float xRawInput;
     protected float smoothingValue;
     protected int xDirectionFlag=1;
@@ -79,15 +79,14 @@ public abstract class CharacterControllerBase : MonoBehaviour
 
     private void SetSpawnPoint(Transform spawnPointTransform)
 	{
-        spawnPoint = spawnPointTransform.position;
+        spawnPoint.position = spawnPointTransform.position;
 	}
 
     private GameObject CloneInstance()
     {
-        return GameObject.Instantiate(this.gameObject, spawnPoint, Quaternion.identity);
+        return GameObject.Instantiate(this.gameObject, spawnPoint.position, Quaternion.identity);
     }
 	#endregion
-
 	
 	#region Public Methods
 	public void OnMovement(InputAction.CallbackContext value)
