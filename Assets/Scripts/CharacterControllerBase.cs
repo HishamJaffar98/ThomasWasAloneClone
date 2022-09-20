@@ -10,15 +10,17 @@ public abstract class CharacterControllerBase : MonoBehaviour
     #region Cached Components
     [SerializeField] protected CharacterMovement characterMovement;
     [SerializeField] protected CharacterAnimation characterAnimation;
+    [SerializeField] protected ParticleSystem deathParticleFX;
     #endregion
 
     #region Variables
     [SerializeField] protected int movementSmoothingFactor = 2;
+    [SerializeField] protected Vector2 spawnPoint;
     protected float xRawInput;
     protected float smoothingValue;
     protected int xDirectionFlag=1;
     protected bool isActive = false;
-    protected Vector2 spawnPoint;
+    
     #endregion
 
     #region Events
@@ -104,6 +106,15 @@ public abstract class CharacterControllerBase : MonoBehaviour
         }
     }
 
+    public void OnAbilityKeyPressed(InputAction.CallbackContext value)
+	{
+     
+        if (value.performed)
+        {
+            Ability();
+        }
+    }
+
     public virtual void CloneAndDie(GameObject gameObjectToDestroy)
     {
         if(gameObjectToDestroy==this.gameObject)
@@ -111,6 +122,7 @@ public abstract class CharacterControllerBase : MonoBehaviour
             gameObject.GetComponent<PlayerInput>().enabled = false;
             GameObject clone = CloneInstance();
             clone.GetComponent<PlayerInput>().enabled = true;
+            Instantiate(deathParticleFX, gameObject.transform.position, Quaternion.identity);
             OnDeath?.Invoke(this);
             Destroy(gameObject);
         }

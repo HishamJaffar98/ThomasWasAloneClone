@@ -80,7 +80,6 @@ public class CharacterAnimation : MonoBehaviour
 	{
 		if (currentJumpSqueezeState == JumpSqueezeStates.NormalToSqueeze)
 		{
-			Debug.Log("sQUEEZE");
 			squeezeTimer += Time.deltaTime;
 			float interpolationValue = squeezeTimer / squeezeInterval;
 			characterSprite.transform.localScale = Vector3.Lerp(originalScale, squeezeScale, interpolationValue);
@@ -107,9 +106,9 @@ public class CharacterAnimation : MonoBehaviour
 		}
 	}
 
-	private void ToggleSelectedVisual(PlayerInput activePlayerInput)
+	private void ToggleSelectedVisual(PlayerInput[] playerInputArray, int activePlayerInputIndex)
 	{
-		if(gameObject.GetComponent<PlayerInput>()== activePlayerInput)
+		if(gameObject.GetComponent<PlayerInput>()== playerInputArray[activePlayerInputIndex])
 		{
 			selectedVisual.SetActive(true);
 		}

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 3967317ede6eb0c45bcf12fc8c00329d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Kinlove
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1832d3f0da0121d45a0fd982bb75a986, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

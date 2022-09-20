@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 1906905626634106840}
   m_Layer: 0
   m_Name: FireCharacter
-  m_TagString: Untagged
+  m_TagString: FireCharacter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -476,6 +476,30 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: edaad757-67df-4dd9-b9af-9e9e507aa90f
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f903e916-02ab-48f3-8bec-a8cc41b992bf
+    m_ActionName: Player/Switch To Next Character[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5f917345-2b21-42d3-8fee-f886947b216f
+    m_ActionName: Player/Switch To Previous Character[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 467913833106733133}
+        m_TargetAssemblyTypeName: CharacterControllerBase, Assembly-CSharp
+        m_MethodName: OnAbilityKeyPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 909f9bda-b2dd-49d8-8b1d-9a15dd8d3e9f
+    m_ActionName: Player/Ability[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -542,7 +566,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterMovement: {fileID: 6748050549778535906}
   characterAnimation: {fileID: 6748050549778535909}
+  deathParticleFX: {fileID: 3713241932953964824, guid: 71ca9f16a2d8c22478aa5c756d32ff03, type: 3}
   movementSmoothingFactor: 10
+  spawnPoint: {x: -23, y: -4.5}
 --- !u!114 &6748050549778535906
 MonoBehaviour:
   m_ObjectHideFlags: 0
